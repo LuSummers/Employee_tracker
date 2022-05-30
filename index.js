@@ -92,15 +92,9 @@ const showRoles = () => {
 
 // showEmployees())
 const showEmployees = () => {
-  let sql =       `SELECT employee.id, 
-                  employee.first_name, 
-                  employee.last_name, 
-                  roles.title, 
-                  department.department_name AS 'department', 
-                  roles.salary
-                  FROM employee, roles, department 
-                  WHERE department.id = roles.department_id 
-                  AND roles.id = employee.role_id
+  let sql =       `SELECT employee.id,  employee.first_name,   employee.last_name,  roles.title, 
+                  department.department_name AS 'department', roles.salary FROM employee, roles, department 
+                  WHERE department.id = roles.department_id  AND roles.id = employee.role_id
                   ORDER BY employee.id`;
   db.query(sql, (error, response) => {
     if (error) throw error;
@@ -111,30 +105,27 @@ const showEmployees = () => {
 
 
   //addDept
+ 
   const addDept = () => {
-    inquirer.prompt([
-      {
-        type: 'input',
-        name: 'department',
-        message: 'Department name? (Required)',
-        validate: departmentInput => {
-          if (departmentInput) {
-            return true;
-          } else {
-            console.log('Please enter department!');
-            return false;
-          }
+    inquirer
+      .prompt([
+        {
+          name: 'newDepartment',
+          type: 'input',
+          message: 'What is the name of your new Department?',
+          validate: validate.validateString
         }
-      },
+      ])
+      .then((answer) => {
+        let sql =     `INSERT INTO department (department_name) VALUES (?)`;
+        db.query(sql, answer.newDepartment, (error, response) => {
+          if (error) throw error;
+          console.log(answer.newDepartment + ` Department successfully created!`);
+          showDepts();
+        });
+      });
+};
 
-    ]).then(answers => {
-      console.log(answers);
-      const department = new Department(answers.name);
-      team.push(department);
-      mainMenu();
-    })
-
-  };
   //ADD ROLE
   const addRole = () => {
     inquirer.prompt([
@@ -185,7 +176,7 @@ const showEmployees = () => {
       mainMenu();
     });
   }
-  //INTERN
+  //add employee
   const addEmployee = () => {
     inquirer.prompt([
       {
