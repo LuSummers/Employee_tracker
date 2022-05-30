@@ -9,33 +9,32 @@ const start =['View All Departments', 'View All Roles',
  'View All Employees', 'Add A Department', 'Add a Role',
 'Add an Employee','Update an Employee Role', 'exit']
 
-//express middleware
+// //express middleware
 
-//Default response for any other request (Not Found)
-app.use((req, res) => {
-    res.status(404).end();
-  });
+// //Default response for any other request (Not Found)
+// app.use((req, res) => {
+//     res.status(404).end();
+//   });
 
-//Start server after DB connection
-db.connect(err => {
-    if (err) throw err;
-    console.log('Database connected.');
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  });
+// //Start server after DB connection
+// db.connect(err => {
+//     if (err) throw err;
+//     console.log('Database connected.');
+//     app.listen(PORT, () => {
+//       console.log(`Server running on port ${PORT}`);
+//     });
+//   });
 
 
 const startApp = () => {
     inquirer.prompt(
       {
         type: 'list',
-        name: 'choices',
+        name: 'type',
         message: 'What would you like to do?',
         choices: start
 
- }
-    ).then(answers => {
+ }).then(answers => {
       if (answers.type === 'View All Departments') {
         //show all dept table
         showDepts();
@@ -65,11 +64,51 @@ const startApp = () => {
 
       } else {
         //exit
-        connectionEnd();
+        connection.end();
       }
     })
   };
-  // An array of questions for user input
+////////////
+const showDepts = () => {
+  const sql =   `SELECT department.id AS id, department.department_name AS department FROM department`; 
+  db.query(sql, (error, response) => {
+    if (error) throw error;
+    console.table(response);
+    startApp();
+  });
+};
+
+// showRoles()
+const showRoles = () => {
+  const sql =     `SELECT roles.id, roles.title, department.department_name AS department
+                  FROM roles
+                  INNER JOIN department ON roles.department_id = department.id`;
+  db.query(sql, (error, response) => {
+    if (error) throw error;
+      response.forEach((roles) => {console.log(roles.title);});
+      startApp();
+  });
+};
+
+// showEmployees())
+const showEmployees = () => {
+  let sql =       `SELECT employee.id, 
+                  employee.first_name, 
+                  employee.last_name, 
+                  roles.title, 
+                  department.department_name AS 'department', 
+                  roles.salary
+                  FROM employee, roles, department 
+                  WHERE department.id = roles.department_id 
+                  AND roles.id = employee.role_id
+                  ORDER BY employee.id`;
+  db.query(sql, (error, response) => {
+    if (error) throw error;
+    console.table(response);
+    startApp();
+  });
+};
+
 
   //addDept
   const addDept = () => {
@@ -215,9 +254,4 @@ const startApp = () => {
   
 
 }
-
-mainMenu();
-}
-  
-
 startApp();
