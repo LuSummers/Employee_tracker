@@ -12,10 +12,10 @@ VALUES
   ('Technologist', '70000','3'),
   ('Assistant', '50000', '4');
 
-INSERT INTO employee (first_name, last_name, role_id)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES
-  ('Ronald', 'Giant', "1"),
-  ('Tiki', 'Barber', "2"),
-   ('Jamie', 'Courtesy', "2"),
-    ('Sandy', 'Beach', "4"),
-  ('Piers', 'Morgan', "3");
+  ('Ronald', 'Giant', "1", null),
+  ('Tiki', 'Barber', "2", "1"),
+   ('Jamie', 'Courtesy', "2", "1"),
+    ('Sandy', 'Beach', "4", "2"),
+  ('Piers', 'Morgan', "3", "1");

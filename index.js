@@ -78,7 +78,7 @@ const showRoles = () => {
 
 // showEmployees())
 const showEmployees = () => {
-  let sql = `SELECT employee.id,  employee.first_name,   employee.last_name,  roles.title, 
+  let sql = `SELECT employee.id,  employee.first_name, employee.last_name, employee.manager_id, roles.title, 
                   department.department_name AS 'department', roles.salary FROM employee, roles, department 
                   WHERE department.id = roles.department_id  AND roles.id = employee.role_id
                   ORDER BY employee.id`;
