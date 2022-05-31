@@ -291,7 +291,7 @@ async function removeEmployee () {
           if (err) throw err;
       }
   )
-  console.log('Employee has been removed on the system!');
+  console.log('Employee has been deleted in the database!');
    showEmployees();
 
 };
