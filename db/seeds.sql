@@ -1,17 +1,21 @@
 INSERT INTO department (department_name)
 VALUES
-  ('Maintenance'),
   ('Engineering'),
+  ('Radiology'),
+   ('Laboratory'),
   ('Tech Support');
 							 
 INSERT INTO roles (title, salary, department_id)
 VALUES
-  ('Supervisor', '200000', '2'),
-  ('Technician', '50000','3'),
-  ('Assistant', '70000', '2');
+  ('Manager', '1500000', '1'),
+ ('Superviser', '100000', '2'),
+  ('Technologist', '70000','3'),
+  ('Assistant', '50000', '4');
 
 INSERT INTO employee (first_name, last_name, role_id)
 VALUES
   ('Ronald', 'Giant', "1"),
   ('Tiki', 'Barber', "2"),
+   ('Jamie', 'Courtesy', "2"),
+    ('Sandy', 'Beach', "4"),
   ('Piers', 'Morgan', "3");
