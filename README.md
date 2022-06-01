@@ -7,8 +7,8 @@ The user will have to install Node JS to their computer in order to perform the 
 
 
 ## Built With
-* HTML
-* CSS
+* Javascript
+* MYSQL
 * Node JS
 * Inquirer package
 * Jest package
